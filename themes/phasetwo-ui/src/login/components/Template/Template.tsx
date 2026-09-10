@@ -32,7 +32,7 @@ import { useInitializeTemplate } from "./useInitializeTemplate";
 import {
   useDynamicCss,
   useDynamicFavicon,
-  useRealmAssetsBase,
+  useRealmBasePath,
 } from "../../hooks/useDynamicCss";
 
 export function Template(props: {
@@ -66,8 +66,8 @@ export function Template(props: {
 
   const { kcClsx } = useKcClsx();
 
-  const assetsBase = useRealmAssetsBase(kcContext);
-  const logoUrl = `${assetsBase}/assets/img/logo`;
+  const realmBasePath = useRealmBasePath(kcContext);
+  const logoUrl = `${realmBasePath}/assets/img/logo`;
   const [logoError, setLogoError] = useState(false);
 
   const realmDisplayName = kcContext.realm.displayName || kcContext.realm.name;
@@ -107,15 +107,6 @@ export function Template(props: {
           {kcContext.darkMode !== false && <ModeToggle />}
 
           {enabledLanguages.length > 1 && <Languages />}
-        </div>
-
-        {/* Deploy check for the PetsApp fork of this theme. Remove once the
-            rollout has been confirmed in the target environment. */}
-        <div
-          data-petsapp-theme-marker
-          className="z-20 mx-auto mt-16 rounded-md bg-destructive px-3 py-1 text-center text-sm font-semibold text-destructive-foreground lg:mt-0"
-        >
-          PetsApp theme fork — deploy check
         </div>
 
         <div className="flex flex-1 items-center justify-center flex-col">

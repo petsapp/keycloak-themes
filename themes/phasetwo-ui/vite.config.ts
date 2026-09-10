@@ -56,6 +56,8 @@ export default defineConfig({
         <@addToXKeycloakifyMessagesIfMessageKey str="loginPage" />
         <@addToXKeycloakifyMessagesIfMessageKey str="otpFormTitle" />
         <@addToXKeycloakifyMessagesIfMessageKey str="viewEmailTitle" />
+        <@addToXKeycloakifyMessagesIfMessageKey str="emailVerifyWaiting" />
+        <@addToXKeycloakifyMessagesIfMessageKey str="emailVerifyContinuing" />
         <@addToXKeycloakifyMessagesIfMessageKey str="invitationTitle" />
         <@addToXKeycloakifyMessagesIfMessageKey str="invitationBody" />
         <@addToXKeycloakifyMessagesIfMessageKey str="selectOrgTitle" />

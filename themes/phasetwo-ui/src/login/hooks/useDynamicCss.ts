@@ -104,9 +104,9 @@ export function useDynamicFavicon(kcContext: {
 }
 
 /**
- * Returns the base URL for realm assets.
+ * Returns the realm base URL, e.g. https://host/realms/my-realm.
  */
-export function useRealmAssetsBase(kcContext: {
+export function useRealmBasePath(kcContext: {
     realm: { name: string };
     url: {
         resourcesPath?: string;

@@ -9,6 +9,7 @@ import { useI18n } from "@/login/i18n";
 import { useKcContext } from "@/login/KcContext";
 import { assert } from "tsafe/assert";
 import { Template } from "../../components/Template";
+import { useEmailVerifiedPolling } from "../../hooks/useEmailVerifiedPolling";
 
 export function Page() {
     const { kcContext } = useKcContext();
@@ -17,9 +18,12 @@ export function Page() {
     const { msg } = useI18n();
 
     const { url, user } = kcContext;
+
+    const verified = useEmailVerifiedPolling(kcContext);
+
     return (
         <Template
-            displayInfo
+            displayInfo={!verified}
             headerNode={msg("emailVerifyTitle")}
             infoNode={
                 <p className="instruction">
@@ -37,8 +41,15 @@ export function Page() {
             }
         >
             <p className="instruction">
-                {msg("emailVerifyInstruction1", user?.email ?? "")}
+                {verified
+                    ? msg("emailVerifyContinuing")
+                    : msg("emailVerifyInstruction1", user?.email ?? "")}
             </p>
+            {!verified && (
+                <p className="animate-pulse text-sm text-muted-foreground">
+                    {msg("emailVerifyWaiting")}
+                </p>
+            )}
         </Template>
     );
 }

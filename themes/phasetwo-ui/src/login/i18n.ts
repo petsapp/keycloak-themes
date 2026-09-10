@@ -38,6 +38,9 @@ const { I18nProvider, useI18n } = i18nBuilder
       loginPage: "Login page",
       otpFormTitle: "Enter access code",
       viewEmailTitle: "Check your email",
+      // Verify email (polled via the petsapp-verify-email realm resource)
+      emailVerifyWaiting: "Waiting for you to confirm your email…",
+      emailVerifyContinuing: "Email confirmed. Signing you in…",
       // Org extensions
       invitationTitle: "Join an Organization",
       invitationBody:
