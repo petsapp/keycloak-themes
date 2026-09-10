@@ -14,8 +14,32 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: "Brown";
+  src: url("./assets/fonts/petsapp/brown-regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brown";
+  src: url("./assets/fonts/petsapp/brown-bold.woff") format("woff");
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cooper";
+  src: url("./assets/fonts/petsapp/cooper-medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+}
+
 @theme {
-  --font-geist: Geist, sans-serif;
+  --font-geist: "Brown", sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -59,7 +83,7 @@
 @layer utilities {
   body.kcBodyClass {
     @apply bg-none bg-no-repeat bg-center bg-fixed;
-    font-family: "Inter var", sans-serif;
+    font-family: "Brown", sans-serif;
   }
 
   body.oauth {
@@ -85,32 +109,32 @@
  *   --p2-login-background-color: #ffffff;
  *
  * These are bridged to shadcn's semantic tokens below using var() with fallbacks.
- * When no dynamic CSS is injected, the defaults (a clean blue theme) are used.
+ * When no dynamic CSS is injected, the defaults mirror petsapp.com.
  */
 :root {
-  --radius: 0.625rem;
+  --radius: 0.75rem;
 
-  --brand-primary: var(--p2-login-primary-color, #3b82f6);
+  --brand-primary: var(--p2-login-primary-color, #2d6aef);
 
-  /* Dynamic theme bridge — reads from injected CSS, falls back to blue theme */
-  --background: var(--p2-login-background-color, oklch(0.97 0 0));
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0 / 88%);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: var(--p2-login-background-color, oklch(1 0 0));
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: var(--p2-login-primary-color, #3b82f6);
+  /* Dynamic bridge with PetsApp brand fallbacks. */
+  --background: var(--p2-login-background-color, #f7f9ff);
+  --foreground: #17213c;
+  --card: #ffffff;
+  --card-foreground: #17213c;
+  --popover: var(--p2-login-background-color, #ffffff);
+  --popover-foreground: #17213c;
+  --primary: var(--p2-login-primary-color, #2d6aef);
   --primary-foreground: var(--p2-login-primary-foreground-color, #ffffff);
-  --secondary: var(--p2-login-secondary-color, oklch(0.97 0 0));
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --secondary: var(--p2-login-secondary-color, #d9e6ff);
+  --secondary-foreground: #0d42b6;
+  --muted: #edf3ff;
+  --muted-foreground: #66718c;
+  --accent: #f89056;
+  --accent-foreground: #44200c;
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: var(--p2-login-primary-color, #3b82f6);
+  --ring: var(--p2-login-primary-color, #2d6aef);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -118,7 +142,7 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: var(--p2-login-primary-color, #3b82f6);
+  --sidebar-primary: var(--p2-login-primary-color, #2d6aef);
   --sidebar-primary-foreground: var(
     --p2-login-primary-foreground-color,
     #ffffff
@@ -131,7 +155,7 @@
 
 .dark {
   /* Brand color stays same in dark mode (used for right panel background) */
-  --brand-primary: var(--p2-login-primary-color, #3b82f6);
+  --brand-primary: var(--p2-login-primary-color, #2d6aef);
 
   --background: var(
     --p2-login-background-color-dark,
@@ -188,24 +212,60 @@
 }
 
 @layer utilities {
+  /*
+   * The autofill surface must match whatever the field is painted on, or the
+   * inset fill shows a seam against sibling addons that are not part of the
+   * input (e.g. the password visibility button in an InputGroup).
+   * The login card is only opaque from the sm breakpoint up.
+   */
+  :root {
+    --autofill-surface: var(--background);
+  }
+
+  @media (width >= 40rem) {
+    :root {
+      --autofill-surface: var(--card);
+    }
+  }
+
   /* Override browser autocomplete styling */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px var(--background) inset !important;
+    -webkit-box-shadow: 0 0 0 30px var(--autofill-surface) inset !important;
     -webkit-text-fill-color: var(--foreground) !important;
-    box-shadow: 0 0 0 30px var(--background) inset !important;
+    box-shadow: 0 0 0 30px var(--autofill-surface) inset !important;
   }
 
-  /* For dark mode */
-  .dark input:-webkit-autofill,
-  .dark input:-webkit-autofill:hover,
-  .dark input:-webkit-autofill:focus,
-  .dark input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px var(--background) inset !important;
+  /*
+   * Standard selector, in its own rule: an unknown pseudo-class invalidates
+   * every selector it is grouped with.
+   */
+  input:autofill {
     -webkit-text-fill-color: var(--foreground) !important;
-    box-shadow: 0 0 0 30px var(--background) inset !important;
+    box-shadow: 0 0 0 30px var(--autofill-surface) inset !important;
+  }
+
+  /*
+   * Chromium paints its own autofill background on the input, and nothing but
+   * the input. A trailing addon laid out as a sibling therefore occupies a
+   * strip the fill never reaches, which reads as a hard seam inside the field.
+   * Float the addon over the input instead so the input spans the whole field
+   * and whatever the browser paints covers all of it. The addon and its button
+   * are transparent, so the fill shows through behind them.
+   */
+  [data-slot="input-group"] > [data-slot="input-group-addon"][data-align="inline-end"] {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+  }
+
+  [data-slot="input-group"]:has(
+      > [data-slot="input-group-addon"][data-align="inline-end"]
+    )
+    > input[data-slot="input-group-control"] {
+    padding-inline-end: 2.75rem;
   }
 }
 
@@ -215,5 +275,15 @@
   }
   body {
     @apply bg-background text-foreground m-0 text-sm;
+    font-family: "Brown", sans-serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Cooper", Georgia, serif;
+    font-weight: 500;
   }
 }

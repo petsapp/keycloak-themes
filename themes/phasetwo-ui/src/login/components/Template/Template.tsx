@@ -21,19 +21,15 @@ import { useKcClsx } from "@keycloakify/login-ui/useKcClsx";
 import { useSetClassName } from "keycloakify/tools/useSetClassName";
 import { RotateCcw, User } from "lucide-react";
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FiHome } from "react-icons/fi";
 import { useI18n } from "../../i18n";
 import { useKcContext } from "../../KcContext";
 import { Languages } from "../ui/Langauges";
-import fallbackLogo from "./../../assets/img/phasetwo-logo.svg";
+import petsAppLogo from "./../../assets/img/petsapp-logo-rounded.png";
 import shape from "./../../assets/img/shape.svg";
 import { useInitializeTemplate } from "./useInitializeTemplate";
-import {
-  useDynamicCss,
-  useDynamicFavicon,
-  useRealmBasePath,
-} from "../../hooks/useDynamicCss";
+import { useDynamicCss, useDynamicFavicon } from "../../hooks/useDynamicCss";
 
 export function Template(props: {
   displayInfo?: boolean;
@@ -66,10 +62,6 @@ export function Template(props: {
 
   const { kcClsx } = useKcClsx();
 
-  const realmBasePath = useRealmBasePath(kcContext);
-  const logoUrl = `${realmBasePath}/assets/img/logo`;
-  const [logoError, setLogoError] = useState(false);
-
   const realmDisplayName = kcContext.realm.displayName || kcContext.realm.name;
 
   useEffect(() => {
@@ -93,9 +85,9 @@ export function Template(props: {
   useDynamicFavicon(kcContext);
 
   return (
-    <div className="grid min-h-svh lg:grid-cols-2 ">
+    <div className="grid min-h-svh lg:grid-cols-[minmax(0,1.05fr)_minmax(26rem,0.95fr)]">
       {/* Main content */}
-      <div className="flex flex-col gap-4 px-0 py-0 pb-6 lg:p-6 lg:md:p-10 lg:pt-10 min-h-screen lg:min-h-0 bg-background lg:bg-primary">
+      <div className="relative flex min-h-screen flex-col gap-4 bg-background px-0 py-0 pb-6 lg:min-h-0 lg:p-10">
         {/*  navigation */}
         <div className="absolute top-4 inset-s-4 z-20 flex gap-2">
           <Button type="button" variant="outline" size="icon" asChild>
@@ -111,28 +103,17 @@ export function Template(props: {
 
         <div className="flex flex-1 items-center justify-center flex-col">
           <div className="w-full max-w-xl">
-            <Card className="shadow-none bg-transparent sm:bg-card border-0 sm:border sm:shadow-sm">
+            <Card className="border-0 bg-transparent shadow-none sm:border sm:border-blue-100 sm:bg-card sm:shadow-xl sm:shadow-blue-950/5">
               <CardHeader>
                 <CardTitle>
                   {/* Mobile header with logo */}
                   <div className="lg:hidden relative mt-8">
                     <div className="flex flex-col items-center justify-center gap-3">
-                      <div className="mb-8 flex items-center gap-3">
-                        {!logoError ? (
-                          <img
-                            src={logoUrl}
-                            alt={realmDisplayName}
-                            className="h-10 max-w-50 object-contain"
-                            onError={() => setLogoError(true)}
-                          />
-                        ) : (
-                          <img
-                            src={fallbackLogo}
-                            alt={realmDisplayName}
-                            className="h-10 max-w-50 object-contain"
-                          />
-                        )}
-                      </div>
+                      <img
+                        src={petsAppLogo}
+                        alt={realmDisplayName}
+                        className="mb-8 size-20 rounded-[1.25rem] shadow-lg shadow-blue-950/15"
+                      />
                     </div>
                   </div>
                   {(() => {
@@ -261,34 +242,27 @@ export function Template(props: {
         </div>
       </div>
 
-      <div className="bg-background relative hidden lg:block dark:bg-primary/5">
+      <div className="relative hidden overflow-hidden bg-primary text-primary-foreground lg:block">
+        <div className="absolute -right-24 -top-20 size-72 rounded-full bg-accent/90" />
+        <div className="absolute -bottom-40 -left-28 size-96 rounded-full border-[3rem] border-white/10" />
         <div className="flex items-center pt-20 h-full justify-center z-1">
-          <div className="absolute right-0 top-0 w-full max-w-62.5 xl:max-w-112.5">
+          <div className="absolute right-0 top-0 w-full max-w-62.5 opacity-25 mix-blend-screen xl:max-w-112.5">
             <img src={shape} alt="grid" />
           </div>
-          <div className="absolute bottom-0 left-0 w-full max-w-62.5 rotate-180 xl:max-w-112.5">
+          <div className="absolute bottom-0 left-0 w-full max-w-62.5 rotate-180 opacity-25 mix-blend-screen xl:max-w-112.5">
             <img src={shape} alt="grid" />
           </div>
 
-          <div className="flex justify-center my-auto flex-col items-center max-w-xs">
-            <div className="mb-4 flex items-center gap-3">
-              {!logoError ? (
-                <img
-                  src={logoUrl}
-                  alt={realmDisplayName}
-                  className="h-12 max-w-50 object-contain"
-                  onError={() => setLogoError(true)}
-                />
-              ) : (
-                <img
-                  src={fallbackLogo}
-                  alt={realmDisplayName}
-                  className="h-12 max-w-50 object-contain"
-                />
-              )}
+          <div className="relative z-10 flex max-w-sm flex-col items-center justify-center px-8 text-center">
+            <div className="mb-8 rounded-[1.85rem] bg-white p-3 shadow-xl shadow-blue-950/20">
+              <img
+                src={petsAppLogo}
+                alt={realmDisplayName}
+                className="size-32 rounded-[1.35rem]"
+              />
             </div>
 
-            <p className="text-center text-foreground">
+            <p className="max-w-xs text-center text-lg leading-relaxed text-white/90">
               {msg("welcomeMessage")}
             </p>
           </div>

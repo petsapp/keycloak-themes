@@ -13,7 +13,7 @@ const { I18nProvider, useI18n } = i18nBuilder
   .withThemeName<ThemeName>()
   .withCustomTranslations({
     en: {
-      welcomeMessage: "Let's do this.",
+      welcomeMessage: "Everything your practice needs, one login away.",
       loginAccountTitle: "Login to your account",
       registerTitle: "Register a new account",
       email: "Email",
