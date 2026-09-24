@@ -33,7 +33,7 @@
     <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <main.java.package>io.phasetwo.keycloak.themes</main.java.package>
-    <freemarker.version>2.3.33</freemarker.version>
+    <freemarker.version>2.3.35</freemarker.version>
     <junit.version>5.11.2</junit.version>
     <keycloak.version>26.6.3</keycloak.version>
     <lombok.version>1.18.46</lombok.version>
